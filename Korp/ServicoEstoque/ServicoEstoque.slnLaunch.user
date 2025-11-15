@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "ServiçoEstoque",
+    "Projects": [
+      {
+        "Path": "ServicoEstoque\\ServicoEstoque.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

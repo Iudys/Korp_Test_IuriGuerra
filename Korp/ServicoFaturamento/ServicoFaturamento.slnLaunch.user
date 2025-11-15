@@ -1,0 +1,11 @@
+[
+  {
+    "Name": "Novo Perfil",
+    "Projects": [
+      {
+        "Path": "ServicoFaturamento\\ServicoFaturamento.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]

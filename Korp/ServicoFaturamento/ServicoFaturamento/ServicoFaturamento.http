@@ -1,0 +1,6 @@
+@ServicoFaturamento_HostAddress = http://localhost:5217
+
+GET {{ServicoFaturamento_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
