@@ -1,0 +1,64 @@
+<div class="page-container">
+  
+  <div class="form-card">
+    <h2>Cadastrar Produto</h2>
+    <form [formGroup]="produtoForm" (ngSubmit)="onSubmit()">
+      <div class="form-group">
+        <label for="codigo">Código</label>
+        <input id="codigo" type="text" formControlName="codigo">
+      </div>
+      <div class="form-group">
+        <label for="descricao">Descrição (Nome)</label>
+        <input id="descricao" type="text" formControlName="descricao">
+      </div>
+      <div class="form-group">
+        <label for="saldo">Saldo Inicial</label>
+        <input id="saldo" type="number" formControlName="saldo">
+      </div>
+      <button type="submit" [disabled]="produtoForm.invalid">Salvar Produto</button>
+    </form>
+  </div>
+
+  <div class="table-container">
+    <h2>Produtos em Estoque</h2>
+    
+    <div *ngIf="isLoading" class="loading-spinner">Carregando...</div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Descrição</th>
+          <th>Saldo Atual</th>
+          <th>Gerenciar Saldo</th> <th>Ações</th>           </tr>
+      </thead>
+      
+      <tbody *ngIf="produtos$ | async as produtos">
+        <tr *ngFor="let produto of produtos">
+          <td>{{ produto.id }}</td>
+          <td>{{ produto.descricao }}</td>
+          <td>{{ produto.saldo }}</td>
+          
+          <td>
+            <div class="gerenciar-saldo-form">
+              <input type="number" min="1" #qtyInput>
+              <button (click)="onAdicionarEstoque(produto, qtyInput.value)" class="btn-saldo-add">+</button>
+              <button (click)="onRemoverEstoque(produto, qtyInput.value)" class="btn-saldo-rem">-</button>
+            </div>
+          </td>
+
+          <td>
+            <button (click)="onDeletarProduto(produto)" class="btn-deletar">
+              Remover
+            </button>
+          </td>
+        </tr>
+        
+        <tr *ngIf="produtos.length === 0 && !isLoading">
+          <td colspan="5">Nenhum produto cadastrado.</td>
+        </tr>
+      </tbody>
+
+    </table>
+  </div>
+</div>

@@ -1,1 +1,191 @@
-/* You can add global styles to this file, and also import other style files */
+
+@use 'sass:color';
+
+/* Paleta de Cores Korp */
+$korp-red: #E60000;
+$korp-blue: #0d6efd; 
+$success-color: #198754; 
+$warning-color: #ffc107;
+$danger-color: #dc3545;
+$background-color: #f7f9fc; // Fundo cinza-azulado (do site)
+$card-background: #ffffff;
+$text-color: #444;
+$heading-color: #111;
+$border-color: #dee2e6;
+$nav-height: 60px;
+$container-width: 1140px;
+
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0;
+  padding-top: $nav-height; 
+  background-color: $background-color;
+  color: $text-color;
+}
+
+h1, h2, h3 {
+  color: $heading-color;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+
+.container {
+  max-width: $container-width;
+  margin: 30px auto;
+  padding: 30px; 
+  background-color: $card-background;
+  border: none; 
+  border-radius: 16px; 
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.07); // Sombra suave
+}
+
+
+button,
+.btn-novo, // estilo a links com esta classe
+.btn-success,
+.btn-secondary,
+.btn-danger {
+  padding: 12px 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase; 
+  letter-spacing: 0.5px;
+  color: #fff;
+  background-color: $korp-red; // Cor primária padrão
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none; // Para os links <a>
+  
+  &:hover { 
+    background-color: color.adjust($korp-red, $lightness: -7%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 10px rgba(230, 0, 0, 0.3);
+  }
+  &:disabled {
+    background-color: #ccc;
+    color: #777;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+  }
+}
+
+// Botão Secundário (ex: Reabrir, Amarelo)
+.btn-secondary {
+  background-color: $warning-color;
+  color: #333;
+  box-shadow: none;
+  &:hover {
+    background-color: color.adjust($warning-color, $lightness: -10%);
+    color: #333;
+    box-shadow: 0 4px 10px rgba(255, 193, 7, 0.3);
+  }
+}
+
+// Botão de Perigo 
+.btn-danger {
+  background-color: $danger-color;
+  box-shadow: none;
+  &:hover {
+    background-color: color.adjust($danger-color, $lightness: -10%);
+    box-shadow: 0 4px 10px rgba(220, 53, 69, 0.3);
+  }
+}
+
+// Botão de Sucesso
+.btn-success {
+  background-color: $success-color;
+  box-shadow: none;
+  &:hover {
+    background-color: color.adjust($success-color, $lightness: -10%);
+    box-shadow: 0 4px 10px rgba(25, 135, 84, 0.3);
+  }
+}
+
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  
+  th, td {
+    border-bottom: 1px solid $border-color; // Apenas borda inferior
+    padding: 16px 10px; // Mais espaçamento
+    text-align: left;
+    vertical-align: middle;
+  }
+  
+  thead th {
+    background-color: transparent;
+    color: #888;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-top: 1px solid $border-color;
+  }
+  
+  tbody tr:nth-child(even) {
+    background-color: #fcfdff; // Fundo de linha alternado
+  }
+}
+
+
+.form-group {
+  margin-bottom: 15px;
+  label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+  }
+  input[type="text"],
+  input[type="number"],
+  select {
+    width: 100%;
+    padding: 12px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1rem;
+    box-sizing: border-box; 
+    transition: all 0.2s;
+
+    &:focus {
+      border-color: $korp-red;
+      box-shadow: 0 0 0 3px rgba(230, 0, 0, 0.1);
+      outline: none;
+    }
+  }
+}
+
+
+.link-voltar {
+  display: inline-block;
+  margin-bottom: 20px;
+  text-decoration: none;
+  font-weight: 600;
+  color: $korp-red;
+  &:hover { text-decoration: underline; }
+}
+
+.status {
+  padding: 6px 12px;
+  border-radius: 15px;
+  font-weight: 700;
+  color: white;
+  font-size: 0.85rem;
+  
+  &.status-aberta { background-color: $korp-blue; }
+  &.status-fechada { background-color: $success-color; }
+  &.status-cancelada { background-color: #6c757d; }
+}
+
+/* Estado de Tabela Vazia */
+.empty-state {
+  text-align: center;
+  color: #777;
+  padding: 30px;
+  font-style: italic;
+}

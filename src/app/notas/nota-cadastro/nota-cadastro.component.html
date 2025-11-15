@@ -1,0 +1,48 @@
+<a routerLink="/notas" class="link-voltar">&larr; Voltar para a lista</a>
+<h2>Lançar Pedido (Nova Nota Fiscal)</h2>
+
+<form [formGroup]="notaForm" (ngSubmit)="onSubmit()">
+
+  <div class="itens-header">
+    <h3>Itens do Pedido</h3>
+    <button type="button" (click)="adicionarItem()">+ Adicionar Item</button>
+  </div>
+  
+  <div formArrayName="itens">
+    <div *ngFor="let item of itens.controls; let i = index" [formGroupName]="i" class="item-row">
+
+      <div class="form-group fg-produto">
+        <label [for]="'produto-' + i">Produto</label>
+        <select [id]="'produto-' + i" formControlName="produto" [compareWith]="compararProdutos">
+          <option [ngValue]="null" disabled>Selecione um produto...</option>
+          <option *ngFor="let p of produtosDisponiveis$ | async" [ngValue]="p">
+            {{ p.descricao }} (Saldo: {{ p.saldo }})
+          </option>
+        </select>
+      </div>
+      
+      <div class="form-group fg-qtd">
+        <label [for]="'qtd-' + i">Qtd.</label>
+        <input [id]="'qtd-' + i" type="number" formControlName="quantidade">
+      </div>
+
+      <div class="fg-acao">
+        <button type="button" (click)="removerItem(i)" class="btn-remover" [disabled]="itens.length <= 1">
+          &times;
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <hr>
+
+  <button type="submit" [disabled]="notaForm.invalid" class="btn-salvar">
+    Lançar Pedido (Salvar Nota)
+  </button>
+
+  <div *ngIf="errorMessage" class="error-feedback">
+    <strong>Erro:</strong> {{ errorMessage }}
+  </div>
+
+</form>

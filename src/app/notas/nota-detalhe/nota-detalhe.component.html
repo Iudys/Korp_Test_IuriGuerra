@@ -1,0 +1,67 @@
+<a routerLink="/notas" class="link-voltar">&larr; Voltar para a lista</a>
+
+<ng-container *ngIf="!isLoading && notaAtual">
+  <div class="detalhe-header">
+    <h1>Nota Fiscal Nº {{ notaAtual.numero }}</h1>
+    
+    <span class="status" 
+          [class.status-aberta]="notaAtual.status === 'Aberta'" 
+          [class.status-fechada]="notaAtual.status === 'Fechada'"
+          [class.status-cancelada]="notaAtual.status === 'Cancelada'">
+      {{ notaAtual.status }}
+    </span>
+  </div>
+
+  <h3>Itens da nota:</h3>
+  <ul>
+    <li *ngFor="let item of notaAtual.itens">
+      {{ item.descricaoProduto }} (Qtd: {{ item.quantidade }})
+    </li>
+  </ul>
+
+  <div class="actions">
+    
+    <button 
+      *ngIf="notaAtual.status === 'Aberta'"
+      class="btn-print"
+      (click)="onImprimir()"
+      [disabled]="isLoading">
+      
+      <span *ngIf="!isLoading">🖨️ Imprimir Nota</span>
+      <span *ngIf="isLoading">Processando...</span>
+    </button>
+
+    <button
+      *ngIf="notaAtual.status === 'Fechada'"
+      class="btn-reabrir"
+      (click)="onReabrir()"
+      [disabled]="isLoading">
+      
+      <span *ngIf="!isLoading">↩️ Reabrir para Editar</span>
+      <span *ngIf="isLoading">Processando...</span>
+    </button>
+
+    <button
+      *ngIf="notaAtual.status !== 'Cancelada'"
+      class="btn-cancelar"
+      (click)="onCancelar()"
+      [disabled]="isLoading">
+      
+      <span *ngIf="!isLoading">❌ Cancelar Nota</span>
+      <span *ngIf="isLoading">Processando...</span>
+    </button>
+
+    <p *ngIf="notaAtual.status === 'Cancelada'" class="cancelada-info">
+      Esta nota foi cancelada.
+    </p>
+  </div>
+
+</ng-container>
+
+<ng-template #loading>
+  <p *ngIf="isLoading">Carregando dados da nota...</p>
+</ng-template>
+
+<div *ngIf="errorMessage" class="error-feedback">
+  <strong>Falha:</strong> {{ errorMessage }}
+</div>

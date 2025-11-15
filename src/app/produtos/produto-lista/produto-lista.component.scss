@@ -1,0 +1,55 @@
+@use 'sass:color';
+@use '../../../styles.scss' as *;
+
+// Layout de 2 colunas
+.page-container {
+  display: grid;
+  grid-template-columns: 380px 1fr;
+  gap: 30px;
+}
+
+// Card do formulário
+.form-card {
+  padding: 20px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  background: #fdfdfd;
+  
+  h2 { margin-top: 0; }
+}
+
+.loading-spinner {
+  text-align: center;
+  padding: 20px;
+  font-size: 1.2rem;
+}
+
+// Layout do formulário na tabela
+.gerenciar-saldo-form {
+  display: flex;
+  gap: 5px;
+
+  input[type="number"] {
+    width: 60px;
+    padding: 8px; 
+    font-size: 0.9rem;
+  }
+
+  // Os botões + e - (btn-success, btn-secondary)
+  // já são estilizados globalmente!
+  // ajuste só de tamanho
+  button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    font-weight: bold;
+    width: 40px;
+  }
+}
+
+// O botão "Remover" (btn-danger)
+// também é estilizado globalmente.
+// ajuste só de tamanho
+.btn-deletar {
+  font-size: 0.8rem;
+  padding: 10px;
+}

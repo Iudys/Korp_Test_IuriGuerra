@@ -1,0 +1,43 @@
+<div class="list-header">
+  <h2>Notas Fiscais Emitidas</h2>
+  <a routerLink="/notas/novo" class="btn-novo">
+    + Lançar Nova Nota
+  </a>
+</div>
+
+<table>
+  <thead>
+    <tr>
+      <th>ID da Nota</th>
+      <th>Status</th>
+      <th>Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let nota of notas$ | async">
+      
+      <td>{{ nota.id }}</td>
+      
+      <td>
+        <span class="status" 
+              [class.status-aberta]="nota.status === 'Aberta'" 
+              [class.status-fechada]="nota.status === 'Fechada'"
+              [class.status-cancelada]="nota.status === 'Cancelada'">
+          {{ nota.status }}
+        </span>
+      </td>
+      
+      <td>
+        <a [routerLink]="['/nota', nota.id]" class="btn-detalhe">Ver Detalhes</a>
+      </td>
+    </tr>
+  </tbody>
+  
+  <tbody *ngIf="(notas$ | async)?.length === 0">
+    <tr>
+      <td colspan="3" class="empty-state">
+        Nenhuma nota fiscal encontrada.
+      </td>
+    </tr>
+  </tbody>
+</table>

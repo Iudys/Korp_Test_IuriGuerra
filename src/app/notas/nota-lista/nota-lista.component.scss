@@ -1,0 +1,33 @@
+@use 'sass:color';
+@use '../../../styles.scss' as *;
+
+// Layout do cabeçalho (Título + Botão)
+.list-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid $korp-red; // Borda Korp
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+// O badge de status (estilo único)
+.status {
+  // Já está definido no styles.scss global!
+  
+}
+
+// O link "Ver Detalhes"
+.btn-detalhe {
+  text-decoration: none;
+  font-weight: 700;
+  color: $korp-red;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}
