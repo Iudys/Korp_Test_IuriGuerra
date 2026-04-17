@@ -1,4 +1,4 @@
-
+LNK DO VIDEO: https://drive.google.com/drive/folders/10THRMDfU1VBUZQRPDmvq0fDKWIGYzneU?usp=sharing
 
 🚀 Sistema de Gestão e Faturamento Inteligente (Teste Técnico Korp)
 Este projeto foi desenvolvido como parte do teste técnico para a Korp. Trata-se de uma aplicação Fullstack moderna, construída sobre uma arquitetura de Microsserviços, projetada para ser resiliente, escalável e inovadora, trazendo a Inteligência Artificial diretamente para as regras de negócio.
