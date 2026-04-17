@@ -1,0 +1,137 @@
+<div class="container py-5">
+  <div class="row mb-4">
+    <div class="col-12 text-center">
+      <h2 class="text-primary fw-bold">Teste Técnico Korp</h2>
+      <p class="text-muted">Sistema de Gestão de Faturamento com Inteligência Artificial</p>
+    </div>
+  </div>
+
+  <div class="alert alert-danger shadow-sm" *ngIf="mensagemErro"><strong>Aviso:</strong> {{ mensagemErro }}</div>
+  <div class="alert alert-success shadow-sm" *ngIf="mensagemSucesso"><strong>Sucesso:</strong> {{ mensagemSucesso }}</div>
+  <div class="alert alert-warning shadow-sm" *ngIf="carregandoImpressao"><i>Processando integração com estoque...</i></div>
+
+  <div class="row g-4">
+    <div class="col-lg-7">
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0 d-flex justify-content-between align-items-center">
+          <h5 class="card-title text-secondary mb-0">📦 Cadastro e Estoque</h5>
+          
+          <button class="btn btn-sm btn-outline-dark" (click)="gerarRelatorioReposicao()" [disabled]="carregandoRelatorio">
+            <span *ngIf="carregandoRelatorio" class="spinner-border spinner-border-sm me-1"></span>
+            🤖 Assistente de Reposição
+          </button>
+        </div>
+        
+        <div class="card-body">
+          <div class="alert alert-secondary small shadow-sm" *ngIf="relatorioIA">
+            <strong>Análise Logística:</strong> {{ relatorioIA }}
+          </div>
+
+          <div class="row g-2 mb-4 align-items-end">
+            <div class="col-md-3">
+              <label class="form-label small text-muted">Cód / Nome Base</label>
+              <input type="text" class="form-control form-control-sm" [(ngModel)]="novoProduto.codigo">
+            </div>
+            <div class="col-md-5">
+              <label class="form-label small text-muted">Descrição Comercial</label>
+              <div class="input-group input-group-sm">
+                <input type="text" class="form-control" [(ngModel)]="novoProduto.descricao">
+                
+                <button class="btn btn-outline-primary fw-bold" type="button" (click)="pedirAjudaIA()" [disabled]="carregandoDescricao">
+                  <span *ngIf="carregandoDescricao" class="spinner-border spinner-border-sm"></span>
+                  <span *ngIf="!carregandoDescricao">✨ IA</span>
+                </button>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label small text-muted">Saldo</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="novoProduto.saldo">
+            </div>
+            <div class="col-md-2 d-grid">
+              <button class="btn btn-success btn-sm" type="button" (click)="salvarProduto()">Salvar</button>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle text-center">
+              <thead class="table-light text-muted small">
+                <tr><th>Cód</th><th class="text-start">Descrição</th><th>Saldo</th><th>Ações</th></tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let p of produtos">
+                  <td><span class="badge bg-secondary">{{ p.codigo }}</span></td>
+                  <td class="text-start">{{ p.descricao }}</td>
+                  <td><strong [class.text-danger]="p.saldo < 10">{{ p.saldo }}</strong></td>
+                  <td>
+                    <div class="btn-group btn-group-sm shadow-sm">
+                      <button type="button" class="btn btn-outline-secondary" (click)="alterarQuantidade(p, -1)">-</button>
+                      <button type="button" class="btn btn-outline-secondary" (click)="alterarQuantidade(p, 1)">+</button>
+                      <button type="button" class="btn btn-outline-danger" (click)="excluirProduto(p.id)">🗑️</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-5">
+      <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+          <h5 class="card-title text-secondary">🧾 Abrir Nova Nota</h5>
+        </div>
+        <div class="card-body">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-8">
+              <label class="form-label small text-muted">Produto</label>
+              <select class="form-select form-select-sm" [(ngModel)]="produtoIdSelecionado">
+                <option *ngFor="let p of produtos" [value]="p.id">{{ p.descricao }} (Qtd: {{p.saldo}})</option>
+              </select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small text-muted">Qtd. Venda</label>
+              <input type="number" class="form-control form-control-sm" [(ngModel)]="quantidadeVenda">
+            </div>
+            <div class="col-12 mt-3 d-grid">
+              <button class="btn btn-primary" type="button" (click)="abrirNovaNota()">Criar Nota Fiscal</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card shadow-sm border-0 h-100">
+        <div class="card-header bg-white border-bottom-0 pt-4 pb-0">
+          <h5 class="card-title text-secondary">🖨️ Fila e Auditoria</h5>
+        </div>
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item py-3 px-0 border-bottom" *ngFor="let n of notas">
+              
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <div>
+                  <span class="d-block fw-bold text-dark">Nota Nº {{ n.numeroSequencial }}</span>
+                  <span class="badge" [ngClass]="n.status === 'Aberta' ? 'bg-warning text-dark' : 'bg-success'">{{ n.status }}</span>
+                </div>
+                
+                <div *ngIf="n.status === 'Aberta'" class="btn-group btn-group-sm">
+                  <button class="btn btn-outline-info" type="button" (click)="auditarCrossSell(n.id)" [disabled]="carregandoAuditoria[n.id]">
+                    <span *ngIf="carregandoAuditoria[n.id]" class="spinner-border spinner-border-sm me-1"></span>
+                    <span *ngIf="!carregandoAuditoria[n.id]">🤖 Auditar</span>
+                  </button>
+                  <button class="btn btn-dark shadow-sm" type="button" (click)="imprimir(n.id)">🖨️ Imprimir</button>
+                </div>
+              </div>
+
+              <div class="alert alert-info py-2 px-3 mb-0 mt-2 small border-0 bg-opacity-10" *ngIf="sugestoesNota[n.id]">
+                <strong>Sugestão de Venda:</strong> {{ sugestoesNota[n.id] }}
+              </div>
+
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
