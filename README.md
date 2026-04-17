@@ -1,8 +1,4 @@
-Parabéns por concluir esse desafio! Chegar até aqui e ter um ecossistema de microsserviços rodando integrado com IA é um feito e tanto.
 
-Para que o seu repositório no GitHub reflita a qualidade do seu código, eu preparei um README.md super estruturado, visualmente agradável (com emojis e divisões claras) e que destaca os pontos fortes da sua arquitetura para os recrutadores.
-
-Basta copiar o texto abaixo, criar um arquivo chamado README.md na raiz do seu projeto e colar.
 
 🚀 Sistema de Gestão e Faturamento Inteligente (Teste Técnico Korp)
 Este projeto foi desenvolvido como parte do teste técnico para a Korp. Trata-se de uma aplicação Fullstack moderna, construída sobre uma arquitetura de Microsserviços, projetada para ser resiliente, escalável e inovadora, trazendo a Inteligência Artificial diretamente para as regras de negócio.
